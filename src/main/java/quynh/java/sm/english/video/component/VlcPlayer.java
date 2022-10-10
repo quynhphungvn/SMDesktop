@@ -32,7 +32,8 @@ public class VlcPlayer {
         videoImageView = new ImageView();
     }
     public VBox createPlayer() {
-    	VBox playerBox = new VBox();    	
+    	VBox playerBox = new VBox();  
+    	playerBox.setPrefWidth(900);
     	videoImageView.setPreserveRatio(true);
     	videoImageView.fitWidthProperty().bind(playerBox.widthProperty());
     	videoImageView.fitHeightProperty().bind(playerBox.heightProperty());

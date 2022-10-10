@@ -37,14 +37,14 @@ public class App extends Application {
     }
     public Scene initEnglishScene() {
     	HBox root = new HBox();
-    	root.getChildren().addAll(initLeftBar(), initMainContent());
-    	
-    	var scene = new Scene(root, 1800, 768);
+    	root.getChildren().addAll(initLeftBar(), initMainContent());   	
+    	var scene = new Scene(root, 1750, 850);
     	scene.setFill(Color.web("#aaa"));
     	return scene;
     }
     public VBox initLeftBar() {
     	VBox vbox = new VBox(new Button("left bar"));
+    	vbox.setPrefWidth(90);
     	vbox.setBorder(new Border(new BorderStroke(Color.BLACK, 
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
     	return vbox;
