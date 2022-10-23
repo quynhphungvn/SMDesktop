@@ -10,9 +10,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
@@ -23,6 +28,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import quynh.java.sm.english.dao.VideoDao;
 import quynh.java.sm.english.model.Phrase;
 import quynh.java.sm.english.model.SubtitleTimer;
@@ -46,7 +53,6 @@ public class VideoWatchingTabContent extends HBox {
 	private FlowPane phraseMeaningPane;
 	private ScrollPane scrollPaneSubtitleList;
 	//data
-	
 	public VideoWatchingTabContent() {	
 		this.setPrefSize(1700, 800);
 		playerBox.setPrefSize(900, 750);
@@ -134,8 +140,11 @@ public class VideoWatchingTabContent extends HBox {
 		vlcPlayer.playVideo(videoUri);
 	}
 	public void createSubtitleListForVideo(String videoUri) {
-		String subFilePath = videoUri.substring(0, videoUri.length() - 4) + ".srt"; 
+		//String subFilePath = videoUri.substring(0, videoUri.length() - 4) + ".srt"; 
+		String subFilePath = videoUri.substring(0, videoUri.lastIndexOf(".")) + ".srt";
+		System.out.println(subFilePath);
 		List<SubtitleTimer> listSubBlock =  FileReaderSupport.readSubtitleBlockFile(subFilePath);
+		System.out.println(listSubBlock.size());
 		createSubtitleListBox(listSubBlock);
 	}
 	public void createSubtitleListBox(List<SubtitleTimer> listSubBlock) {
@@ -311,8 +320,7 @@ public class VideoWatchingTabContent extends HBox {
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}
-					
+					}	
 				}
 			});
 			glishBtn.setOnAction(new EventHandler<ActionEvent>() {			

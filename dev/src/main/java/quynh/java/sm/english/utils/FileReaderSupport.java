@@ -38,19 +38,27 @@ public class FileReaderSupport {
 	    		subContent = temp.split("\r\n\r\n");
 	    	else
 	    		subContent = temp.split("\n\n");	        
-	        if (subContent != null) {
+	        if (subContent.length > 0) {
 	        	for (String subBlock : subContent)
 	        	{
-	        		String[] subBlockParts = null;
-	        		if (windowCFLF)
-	        			subBlockParts = subBlock.split("\r\n");
-	        		else 
-	        			subBlockParts = subBlock.split("\n");
-	        		SubtitleTimer subBlockObj = new SubtitleTimer();
-	        		subBlockObj.setIndex(Integer.parseInt(subBlockParts[0].trim()));
-	        		subBlockObj.setTime(subBlockParts[1]);
-	        		subBlockObj.setContent(subBlockParts[2]);     
-	        		subs.add(subBlockObj);
+	        		if (!subBlock.isEmpty()) {
+		        		String[] subBlockParts = null;
+		        		if (windowCFLF)
+		        			subBlockParts = subBlock.split("\r\n");
+		        		else 
+		        			subBlockParts = subBlock.split("\n");
+		        		SubtitleTimer subBlockObj = new SubtitleTimer();
+		        		subBlockObj.setTime(subBlockParts[1]);
+		        		String tempContent = "";
+		        		if (subBlockParts.length > 3) 
+		        			for (int i = 2; i < subBlockParts.length; i++)
+		        				tempContent = tempContent + subBlockParts[i].trim() + " ";
+		        		else 
+		        			tempContent = subBlockParts[2];
+		        		System.out.println(tempContent);
+		        		subBlockObj.setContent(tempContent);     
+		        		subs.add(subBlockObj);
+	        		}
 	        	}	
 	        }        	      
 	      } catch (IOException e) {
