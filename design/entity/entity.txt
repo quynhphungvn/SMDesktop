@@ -1,0 +1,65 @@
+@startuml
+entity video {
+*id: int 
+*title: varchar(100) NOT NULL
+*subtitle: text
+*url: varchar(255) NOT NULL
+*group_id: int NOT NULL
+*view_count: int
+*type: varchar(10)
+*UNIQUE(url, group_id) 
+}
+entity video_group {
+*id: int 
+*name: varchar(100) NOT NULL
+*user_id: int NOT NULL
+*UNIQUE(name, user_id)
+}
+entity user {
+*id: int
+*username: varchar(100) NOT NULL UNIQUE 
+*password: varchar(32)
+*local_video_path: varchar(255)
+}
+entity symbol_manage {
+*id: int
+*user_id: int
+*symbol_id: int
+*view_count: int
+*UNIQUE(user_id, symbol_id)
+}
+entity word {
+*id: int 
+*content: varchar(25) NOT NULL UNIQUE
+*phonetic: varchar(20)
+*temp_state: boolean
+}
+entity word_manage {
+*id: int 
+*word_id: int 
+*user_id: int 
+*known_state: boolean
+*appear_times: int
+*UNIQUE (user_id, word_id)
+}
+entity symbol {
+*id: int 
+*content: varchar(10) NOT NULL UNIQUE
+*example: varchar(20)
+*example_phonetic: varchar(20)
+*video_url: varchar(100)
+*type: varchar(20)
+}
+entity phrase {
+*id: int
+*content: varchar(100) not null unique
+*meaning: varchar(255)
+*type: varchar(20)
+}
+user ||--o{ video_group
+user ||--o{ word_manage
+user ||--|| symbol_manage
+symbol ||--|| symbol_manage
+word ||--o{ word_manage
+video_group ||--o{ video
+@enduml
