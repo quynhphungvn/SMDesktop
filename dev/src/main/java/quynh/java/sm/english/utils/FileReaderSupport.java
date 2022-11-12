@@ -10,9 +10,19 @@ import java.util.List;
 import java.util.Scanner;
 
 import quynh.java.sm.english.model.Phrase;
-import quynh.java.sm.english.model.SubtitleTimer;
+import quynh.java.sm.english.model.SubtitleBlockTimer;
 
 public class FileReaderSupport {
+	public static String readStringFromFile(String filePath) {
+		String s = null;
+		try {
+			s = Files.readString(Paths.get(filePath));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return s;
+	}
 	public static List<String> readFileByLine(String filePath) {     
 	    ArrayList<String> textLines = new ArrayList<String>(); 
 	    try {
@@ -27,45 +37,6 @@ public class FileReaderSupport {
 	        e.printStackTrace();
 	      }
 	    return textLines;
-	}
-	public static List<SubtitleTimer> readSubtitleBlockFile(String filePath) {     
-		List<SubtitleTimer> subs = new ArrayList<SubtitleTimer>(); 
-	    String[] subContent  = null;
-	    try {
-	    	String temp = Files.readString(Paths.get(filePath));
-	    	boolean windowCFLF = temp.contains("\r\n\r\n");
-	    	if (windowCFLF)
-	    		subContent = temp.split("\r\n\r\n");
-	    	else
-	    		subContent = temp.split("\n\n");	        
-	        if (subContent.length > 0) {
-	        	for (String subBlock : subContent)
-	        	{
-	        		if (!subBlock.isEmpty()) {
-		        		String[] subBlockParts = null;
-		        		if (windowCFLF)
-		        			subBlockParts = subBlock.split("\r\n");
-		        		else 
-		        			subBlockParts = subBlock.split("\n");
-		        		SubtitleTimer subBlockObj = new SubtitleTimer();
-		        		subBlockObj.setTime(subBlockParts[1]);
-		        		String tempContent = "";
-		        		if (subBlockParts.length > 3) 
-		        			for (int i = 2; i < subBlockParts.length; i++)
-		        				tempContent = tempContent + subBlockParts[i].trim() + " ";
-		        		else 
-		        			tempContent = subBlockParts[2];
-		        		System.out.println(tempContent);
-		        		subBlockObj.setContent(tempContent);     
-		        		subs.add(subBlockObj);
-	        		}
-	        	}	
-	        }        	      
-	      } catch (IOException e) {
-	        System.out.println("An error occurred.");
-	        e.printStackTrace();
-	      }	
-	    return subs;
 	}
 	public List<Phrase> getListPhraseFromFile(String filePath) {
 		List<Phrase> phrases = new ArrayList<Phrase>();

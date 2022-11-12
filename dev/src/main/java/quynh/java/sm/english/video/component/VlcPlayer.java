@@ -3,10 +3,12 @@ package quynh.java.sm.english.video.component;
 import java.nio.ByteBuffer;
 
 import javafx.application.Platform;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelBuffer;
 import javafx.scene.image.PixelFormat;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
@@ -37,12 +39,56 @@ public class VlcPlayer {
     	videoImageView.setPreserveRatio(true);
     	videoImageView.fitWidthProperty().bind(playerBox.widthProperty());
     	videoImageView.fitHeightProperty().bind(playerBox.heightProperty());
-    	playerBox.getChildren().add(videoImageView);
-    	//playerBox.getChildren().add(new VlcPlayerControlsPane(embeddedMediaPlayer));
+    	playerBox.getChildren().addAll(videoImageView, createMenuControls());
     	return playerBox;
+    }
+    public EmbeddedMediaPlayer getEmbeddedMediaPlayer() {
+    	return this.embeddedMediaPlayer;
+    }
+    private FlowPane createMenuControls() {
+    	Button pauseBtn = new Button("Pause");
+    	Button nextBtn = new Button(">>");
+    	Button prevBtn = new Button("<<");
+    	Button replay = new Button("R");
+    	Button speedUp = new Button("^");
+    	Button speedDown = new Button("_");
+    	pauseBtn.setOnAction(e -> {
+    		embeddedMediaPlayer.controls().pause();
+    	});
+    	nextBtn.setOnAction(e -> {
+    		long length = embeddedMediaPlayer.status().length();
+    		float curPos = embeddedMediaPlayer.status().position() * length;
+    		embeddedMediaPlayer.controls().setTime((long) (curPos + 5000));    		
+    	});
+    	prevBtn.setOnAction(e -> {	
+    		long length = embeddedMediaPlayer.status().length();
+    		float curPos = embeddedMediaPlayer.status().position() * length;
+    		embeddedMediaPlayer.controls().setTime((long) (curPos - 5000));
+    	});
+    	replay.setOnAction(e -> {
+    		String mrl = embeddedMediaPlayer.media().info().mrl();
+    		embeddedMediaPlayer.media().play(mrl);
+    	});
+    	speedUp.setOnAction(e -> {
+    		float rate = embeddedMediaPlayer.status().rate();
+    		if (rate <= 1.5)
+    			embeddedMediaPlayer.controls().setRate(rate + 0.15f);
+    	});
+    	speedDown.setOnAction(e -> {
+    		float rate = embeddedMediaPlayer.status().rate();
+    		if (rate > 0.5)
+    			embeddedMediaPlayer.controls().setRate(rate - 0.15f);
+    	});
+    	FlowPane fp = new FlowPane();
+    	fp.getChildren().addAll(pauseBtn, prevBtn, nextBtn, replay, speedUp, speedDown);
+    	return fp;
     }
     public void playVideo(String url) {
     	embeddedMediaPlayer.media().play(url);
+    	embeddedMediaPlayer.controls().setRepeat(true);
+    }
+    public void playVideoAt(long time) {
+    	embeddedMediaPlayer.controls().setTime(time);
     }
 	private class FXCallbackVideoSurface extends CallbackVideoSurface {
         FXCallbackVideoSurface() {

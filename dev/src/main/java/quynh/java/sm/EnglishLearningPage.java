@@ -6,7 +6,7 @@ import javafx.scene.layout.FlowPane;
 import quynh.java.sm.english.dao.PronunciationDao;
 import quynh.java.sm.english.pronunciation.component.PronunciationTabContent;
 import quynh.java.sm.english.pronunciation.component.VideoOnlinePlayer;
-import quynh.java.sm.english.video.component.VideoWatchingTabContent;
+import quynh.java.sm.english.video.component.VideoWatchingScreen;
 
 public class EnglishLearningPage extends FlowPane{
 	
@@ -18,7 +18,7 @@ public class EnglishLearningPage extends FlowPane{
     	symbolTab.setContent(new PronunciationTabContent());
     	
     	Tab videoTab = new Tab("Video Watching");
-    	videoTab.setContent(new VideoWatchingTabContent());
+    	videoTab.setContent(new VideoWatchingScreen());
     	
     	englishTabPane.getTabs().addAll(symbolTab, videoTab);
     	this.getChildren().add(englishTabPane);
