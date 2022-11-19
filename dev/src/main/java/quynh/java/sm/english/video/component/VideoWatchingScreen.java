@@ -61,7 +61,7 @@ public class VideoWatchingScreen extends HBox {
 		String subtitles =  FileReaderSupport.readStringFromFile(subFilePath);
 		List<SubtitleBlockTimer> listSubBlockTimer = convertSubToBlockTimer(subtitles);
 		subtitleWordComp.createSubtitleView(listSubBlockTimer);
-		subtitleNoteComp.showListSub(listSubBlockTimer);
+		//subtitleNoteComp.showListSub(listSubBlockTimer);
 	}
 	public List<SubtitleBlockTimer> convertSubToBlockTimer(String subString) {
 		List<SubtitleBlockTimer> subs = new ArrayList<SubtitleBlockTimer>();

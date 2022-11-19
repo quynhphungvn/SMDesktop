@@ -138,7 +138,7 @@ public class SubtitleWordComp extends VBox{
 			this.getChildren().addAll(row1, row2);
 			googleBtn.setOnAction(e -> {
 				try {
-					new ProcessBuilder("x-www-browser", "https://www.google.com/search?tbm=isch&q=" + wordInput.getText().trim()).start();
+					new ProcessBuilder("x-www-browser", "https://www.google.com/search?tbm=isch&q=" + wordInput.getText().trim(), "--incognito").start();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -146,7 +146,7 @@ public class SubtitleWordComp extends VBox{
 			});
 			cambBtn.setOnAction(e -> {
 				try {
-					new ProcessBuilder("x-www-browser", "https://dictionary.cambridge.org/vi/dictionary/english/" + wordInput.getText().trim()).start();
+					new ProcessBuilder("x-www-browser", "https://dictionary.cambridge.org/vi/dictionary/english/" + wordInput.getText().trim(),"--incognito").start();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -154,7 +154,7 @@ public class SubtitleWordComp extends VBox{
 			});
 			tratuBtn.setOnAction(e -> {
 				try {
-					new ProcessBuilder("x-www-browser", "http://tratu.coviet.vn/hoc-tieng-anh/tu-dien/lac-viet/A-V/" + wordInput.getText().trim() +".html").start();
+					new ProcessBuilder("x-www-browser", "http://tratu.coviet.vn/hoc-tieng-anh/tu-dien/lac-viet/A-V/" + wordInput.getText().trim() +".html","--incognito").start();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -162,7 +162,7 @@ public class SubtitleWordComp extends VBox{
 			});
 			glishBtn.setOnAction(e -> {
 				try {
-					new ProcessBuilder("x-www-browser", "https://youglish.com/pronounce/" + wordInput.getText().trim() + "/english?").start();
+					new ProcessBuilder("x-www-browser", "https://youglish.com/pronounce/" + wordInput.getText().trim() + "/english?","--incognito").start();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

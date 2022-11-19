@@ -13,7 +13,7 @@ public class WordLabel extends Label{
 		this.textValue = textValue;
 		this.setText(textValue);
 		this.knownState = knownState;
-		if (!knownState) 
+		if (!this.knownState) 
 			setBackgroundOrange();
 		else 
 			setBackgroundWhite();
@@ -26,7 +26,7 @@ public class WordLabel extends Label{
 			setBackgroundGray();
 		});
 		this.setOnMouseExited(e -> {
-			if (!knownState)
+			if (!this.knownState)
 				setBackgroundOrange();
 			else 
 				setBackgroundWhite();

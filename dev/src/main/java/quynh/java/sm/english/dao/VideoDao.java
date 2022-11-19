@@ -41,7 +41,7 @@ public class VideoDao {
 		return listVideoGroup;
 	}
 	public String findWordsKnown(int userId) {
-		String sql = "select word.content from word, word_manage where user_id=? and word_id = word.id;";
+		String sql = "select word.content from word, word_manage where user_id=? and word_id = word.id and known_state=true;";
 		String result = " ";
 		PreparedStatement pstm;
 		try {
@@ -63,6 +63,7 @@ public class VideoDao {
 		{
 			saveNewWord(word);
 			wordId = findWordIdByContent(word);
+			saveNewWordManage(1, wordId, true);
 		} else {
 			if (findWordIdInWordManage(wordId)) {
 				updateKnownStateWord(1, wordId, true);
@@ -71,15 +72,15 @@ public class VideoDao {
 			}
 		}
 	}
-	private void saveNewWordManage(int i, int wordId, boolean b) {
+	private void saveNewWordManage(int userId, int wordId, boolean knownState) {
 		// TODO Auto-generated method stub
 		String sql = "insert into word_manage(user_id, word_id, known_state) values(?,?,?);";
 		PreparedStatement pstm;
 		try {
 			pstm = conn.prepareStatement(sql);
-			pstm.setInt(1, 1);
+			pstm.setInt(1, userId);
 			pstm.setInt(2, wordId);
-			pstm.setBoolean(3, true);
+			pstm.setBoolean(3, knownState);
 			pstm.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
